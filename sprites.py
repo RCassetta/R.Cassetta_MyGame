@@ -1,4 +1,3 @@
-#This is an edit
 import pygame as pg
 
 from pygame.sprite import Sprite
@@ -53,7 +52,7 @@ class Player(Sprite):
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.center = self.pos
-###
+        
 class Mob(Sprite):
     def __init__(self,width,height):
         Sprite.__init__(self)
@@ -67,31 +66,19 @@ class Mob(Sprite):
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.cofric = 0.1
-    # ...
 
     def behavior(self):
-        # acc go up
-        
-        # self.acc.y = MOB_ACC
-        # self.acc.x = MOB_ACC
+
+
         if self.rect.x > WIDTH or self.rect.x < 0 or self.rect.y < 0 or self.rect.y > HEIGHT:
             self.vel *= -1
-        # if self.rect.x > WIDTH:
-        #     print("I'm off the right screen...")
-        # if self.rect.x < 0:
-        #     print("I'm off the left screen...")
-        # if self.rect.y < 0:
-        #     print("I'm off the top screen...")
-        #     # reduces vel
-        #     self.vel *= -1
-        #     self.acc *= -1
-        # if self.rect.y > HEIGHT:
-        #     print("I'm off the bottom screen...")
+
 
     def update(self):
         # self.inbounds()
         self.acc = self.vel * MOB_FRICTION
-        self.behavior()
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.center = self.pos
+
+

@@ -1,4 +1,3 @@
-#This is an edit
 WIDTH = 800
 HEIGHT = 600
 MOB_WIDTH = 100

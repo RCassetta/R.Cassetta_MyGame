@@ -1,5 +1,4 @@
 # File Created By Ross Cassetta
-#This is an edit
 ### IMPORTS ###
 import pygame as pg
 import random
@@ -27,9 +26,19 @@ enemies = pg.sprite.Group()
 player = Player()
 
 enemy1 = Mob(80,80)
+enemy2 = Mob(80,80)
+enemy3 = Mob(80,80)
+enemy4 = Mob(80,80)
+
 
 all_sprites.add(player)
 all_sprites.add(enemy1)
+all_sprites.add(enemy2)
+all_sprites.add(enemy3)
+all_sprites.add(enemy4)
+
+# for i in range(0,20):
+#     m = Mob(randint(30,90), randinti(30,90))
 
 ### GAME LOOP ###
 while RUNNING:
