@@ -1,5 +1,5 @@
 import pygame as pg
-
+import random as randint
 from pygame.sprite import Sprite
 
 from settings import *
@@ -54,12 +54,12 @@ class Player(Sprite):
         self.rect.center = self.pos
         
 class Mob(Sprite):
-    def __init__(self,width,height):
+    def __init__(self, width, height, color):
         Sprite.__init__(self)
         self.width = width
         self.height = height
-        self.image = pg.Surface((self.width,self.height))
-        self.image.fill(RED)
+        self.image = pg.Surface((self.width, self.height))
+        self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
         self.pos = vec(WIDTH/2, HEIGHT/2)
@@ -68,17 +68,16 @@ class Mob(Sprite):
         self.cofric = 0.1
 
     def behavior(self):
-
-
-        if self.rect.x > WIDTH or self.rect.x < 0 or self.rect.y < 0 or self.rect.y > HEIGHT:
-            self.vel *= -1
-
+        if self.rect.x > WIDTH or self.rect.x < 0:
+            self.vel.x *= -1
+        if self.rect.y < 0 or self.rect.y > HEIGHT:
+            self.vel.y *= -1
+        self.acc = vec(randint.uniform(-MOB_ACC, MOB_ACC), randint.uniform(-MOB_ACC, MOB_ACC))
 
     def update(self):
-        # self.inbounds()
+        self.behavior()
         self.acc = self.vel * MOB_FRICTION
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.center = self.pos
-
 

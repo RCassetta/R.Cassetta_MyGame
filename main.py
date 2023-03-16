@@ -1,7 +1,6 @@
 # File Created By Ross Cassetta
 ### IMPORTS ###
 import pygame as pg
-import random
 import os
 from settings import *
 from sprites import *
@@ -14,7 +13,9 @@ def get_mouse_now():
     x,y = pg.mouse.get_pos()
     return (x,y)
 
+# init pg and create window
 pg.init()
+# init sound mixer
 pg.mixer.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("My first game...")
@@ -25,30 +26,26 @@ all_sprites = pg.sprite.Group()
 enemies = pg.sprite.Group()
 player = Player()
 
-enemy1 = Mob(80,80)
-enemy2 = Mob(80,80)
-enemy3 = Mob(80,80)
-enemy4 = Mob(80,80)
-
-
 all_sprites.add(player)
-all_sprites.add(enemy1)
-all_sprites.add(enemy2)
-all_sprites.add(enemy3)
-all_sprites.add(enemy4)
+player.pos = (0,0)
+for i in range(0,20):
+    # instantiate mobs
+    m = Mob(randint.randint(30,90), randint.randint(30, 90), (RED))
+    enemies.add(m)
+    all_sprites.add(m)
 
-# for i in range(0,20):
-#     m = Mob(randint(30,90), randinti(30,90))
+print(enemies)
+# game loop
 
-### GAME LOOP ###
 while RUNNING:
     clock.tick(FPS)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             RUNNING = False
+    enemies.update()
     all_sprites.update()
 
-    blocks_hit_list = pg.sprite.spritecollide(player, enemies, True)
+    blocks_hit_list = pg.sprite.spritecollide(player, enemies, False)
     for block in blocks_hit_list:
         pass
     screen.fill(BLUE)
