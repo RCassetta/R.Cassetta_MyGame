@@ -6,8 +6,9 @@ vec = pg.math.Vector2
 
 ### PLAYER ###
 class Player(Sprite):
-    def __init__(self):
+    def __init__(self, game):
         Sprite.__init__(self)
+        self.game = game
         self.image = pg.Surface((50,50))
         self.image.fill(BLACK)
         self.rect = self.image.get_rect()
@@ -19,6 +20,7 @@ class Player(Sprite):
         self.canjump = False
     def input(self):
         keystate = pg.key.get_pressed()
+
     ### CONTROLS ###
         if keystate[pg.K_w]:
             self.acc.y = -PLAYER_ACC
@@ -29,8 +31,12 @@ class Player(Sprite):
         if keystate[pg.K_d]:
             self.acc.x = PLAYER_ACC
         if keystate[pg.K_SPACE]:
-            self.acc.x = WIDTH/2
-            self.acc.y = HEIGHT/2
+            self.pos.x = WIDTH/2
+            self.pos.y = HEIGHT/2
+        if keystate[pg.K_ESCAPE]:
+            PAUSED != True
+    def jump(self):
+        hits = pg.sprite.sritecollide(self, self.agame.platforms, False)
 
     ### BORDER ###
     def inbounds(self):
