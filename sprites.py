@@ -24,25 +24,13 @@ class Player(Sprite):
         self.canjump = False
     def input(self):
         keystate = pg.key.get_pressed()
-        # if keystate[pg.K_w]:
-        #     self.acc.y = -PLAYER_ACC
         if keystate[pg.K_a]:
             self.acc.x = -PLAYER_ACC
-        # if keystate[pg.K_s]:
-        #     self.acc.y = PLAYER_ACC
         if keystate[pg.K_d]:
             self.acc.x = PLAYER_ACC
         if keystate[pg.K_c]:
             self.pos.x = WIDTH/2
             self.pos.y = WIDTH/2
-        # if keystate[pg.K_p]:
-        #     if PAUSED == False:
-        #         PAUSED = True
-        #         print(PAUSED)
-        #     else:
-        #         PAUSED = False
-        #         print(PAUSED)
-    # ...
     def jump(self):
         self.rect.x += 1
         hits = pg.sprite.spritecollide(self, self.game.platforms, False)
