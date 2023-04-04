@@ -2,7 +2,7 @@
 
 '''
 My Goal Is:
-To make the player only jump after touching the platforms
+To make the player only jump after touching the platforms // Done
 Add enemy collide points to all platforms
 Incorporate different types of platforms
 Add health bar to player
@@ -87,6 +87,14 @@ class Game:
                 else:
                     self.player.pos.y = hits[0].rect.top
                     self.player.vel.y = 0
+        if PLAYER_HEALTH < 0:
+            pg.quit
+        hits = pg.sprite.spritecollide(self.player, self.enemies, False)
+        if hits:
+            for enemy in hits:
+                print("Lost 10 Health")
+                # player_health -= 10
+                enemy.kill()
   
 
     def draw(self):
