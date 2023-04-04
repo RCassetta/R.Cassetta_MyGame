@@ -36,7 +36,6 @@ class Game:
         print(self.screen)
     def new(self):
         # starting a new game
-        self.score = 0
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
         self.enemies = pg.sprite.Group()
@@ -44,6 +43,7 @@ class Game:
         self.plat1 = Platform(WIDTH, 50, 0, HEIGHT-50, (150,150,150), "normal")
         # self.plat1 = Platform(WIDTH, 50, 0, HEIGHT-50, (150,150,150), "normal")
         self.all_sprites.add(self.plat1)
+        self.player_health = 100
 
         self.platforms.add(self.plat1)
         
@@ -87,16 +87,15 @@ class Game:
                 else:
                     self.player.pos.y = hits[0].rect.top
                     self.player.vel.y = 0
-        if PLAYER_HEALTH < 0:
-            pg.quit
         hits = pg.sprite.spritecollide(self.player, self.enemies, False)
         if hits:
             for enemy in hits:
-                print("Lost 10 Health")
-                # player_health -= 10
+                self.player_health -= 10
+                print(self.player_health)
                 enemy.kill()
+        if self.player_health <= 0:
+            self.player.kill()
   
-
     def draw(self):
         self.screen.fill(BLUE)
         self.all_sprites.draw(self.screen)
