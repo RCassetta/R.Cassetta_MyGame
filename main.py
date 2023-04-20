@@ -4,8 +4,8 @@
 My Goal Is:
 To make the player only jump after touching the platforms // Done
 Add enemy collide points to all platforms
-Incorporate different types of platforms
-Add health bar to player
+Incorporate different types of platforms // Done
+Add health bar to player // DOne
 Change enemies from blocks to animations
 Change player from block to character
 Add a timer and score
