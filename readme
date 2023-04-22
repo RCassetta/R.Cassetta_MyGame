@@ -1,0 +1,13 @@
+/// IMPORTANT ///
+In order to play, please install the following:
+vs code
+python
+pygame
+
+/// CONTROLS ///
+A = Left
+D = Right
+Space = Jump
+C = Restart players position
+
+Thanks for playing!

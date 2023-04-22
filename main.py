@@ -2,16 +2,15 @@
 
 '''
 My Goal Is:
-To make the player only jump after touching the platforms // Done
-Add enemy collide points to all platforms
-Incorporate different types of platforms // Done
-Add health bar to player // DOne
-Change enemies from blocks to animations
-Change player from block to character
-Add a timer and score
-Add objective to game
+To make the player only jump after touching the platforms // DONE
+Incorporate different types of platforms // DONE
+Add health bar to player // DONE
+Add reset position to controlls // DONE
+Add player tracking to the enemies // DONE
+Add enemy collide points to all platforms WIP
+Change enemies from blocks to animations WIP
+Change player from block to character WIP
 '''
-
 
 ### IMPORTS ###
 import pygame as pg
@@ -24,7 +23,6 @@ from tkinter import messagebox
 ### ASSETS ###
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, "img")
-
 
 ### GAME ###
 class Game:
@@ -53,7 +51,7 @@ class Game:
             self.all_sprites.add(p)
             self.platforms.add(p)
         for i in range(0,10):
-            m = Mob(20,20,(0,255,0))
+            m = Mob(self, 20,20,(0,255,0))
             self.all_sprites.add(m)
             self.enemies.add(m)
         self.run()
@@ -64,7 +62,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
-    #Game Constants   
+    # Game Constants   
     def events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -74,7 +72,7 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE:
                     self.player.jump()
-    #Game Updates
+    # Game Updates
     def update(self):
         self.all_sprites.update()
         if self.player.vel.y > 0:
@@ -96,7 +94,7 @@ class Game:
         if self.player_health <= 0:
             self.player.kill()
             self.death_screen = True
-    #Text
+    # Text
     def draw(self):
         self.screen.fill(BLUE)
         self.all_sprites.draw(self.screen)
@@ -110,11 +108,11 @@ class Game:
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x,y)
         self.screen.blit(text_surface, text_rect)
-    #Mouse Pos (Not Being Used)
+    # Mouse Pos (Not Being Used)
     def get_mouse_now(self):
         x,y = pg.mouse.get_pos()
         return (x,y)
-    #HealthBar
+    # HealthBar
     def draw_health_bar(self, surf, x, y, pct):
         if pct < 0:
             pct = 0
@@ -136,11 +134,10 @@ class Game:
         x,y = pg.mouse.get_pos()
         return (x,y)
     def game_over(self):
-        # Check if the player has died and call the death_screen function
         if self.player.health <= 0:
             self.death_screen()
+    # Death Screen WIP
     def death_screen(self):
-        # Create the death screen
         window = tk.Toplevel()
         window.title("Game Over")
         label = tk.Label(window, text="You Died!")

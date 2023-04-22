@@ -3,15 +3,12 @@ from pygame.sprite import Sprite
 from settings import *
 from random import randint
 
-
 vec = pg.math.Vector2
 
-# player class
-
+### PLAYER ###
 class Player(Sprite):
     def __init__(self, game):
         Sprite.__init__(self)
-        # these are the properties
         self.game = game
         self.image = pg.Surface((50,50))
         self.image.fill(BLACK)
@@ -22,6 +19,7 @@ class Player(Sprite):
         self.acc = vec(0,0)
         self.cofric = 0.1
         self.canjump = False
+# Controls
     def input(self):
         keystate = pg.key.get_pressed()
         if keystate[pg.K_a]:
@@ -31,13 +29,14 @@ class Player(Sprite):
         if keystate[pg.K_c]:
             self.pos.x = WIDTH/2
             self.pos.y = WIDTH/2
+# Player Jump
     def jump(self):
         self.rect.x += 1
         hits = pg.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.x -= 1
         if hits:
             self.vel.y = -PLAYER_JUMP
-
+# Player Inbounds
     def inbounds(self):
         if self.rect.x > WIDTH - 50:
             self.pos.x = WIDTH - 25
@@ -51,6 +50,7 @@ class Player(Sprite):
         if self.rect.y < 0:
             self.pos.y = 50
             self.vel.y = 0
+# Player Update
     def update(self):
         self.inbounds()
         self.acc = vec(0, PLAYER_GRAV)
@@ -59,9 +59,12 @@ class Player(Sprite):
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom = self.pos
+
+### MOBS ###
 class Mob(Sprite):
-    def __init__(self,width,height, color):
+    def __init__(self, game, width, height, color):
         Sprite.__init__(self)
+        self.game = game
         self.width = width
         self.height = height
         self.image = pg.Surface((self.width,self.height))
@@ -72,21 +75,25 @@ class Mob(Sprite):
         self.vel = vec(randint(-5, 5), randint(-5, 5))
         self.acc = vec(1,1)
         self.cofric = 0.01
+# Mob Inbounds
     def inbounds(self):
         if self.rect.x > WIDTH - 50 or self.rect.x < 0:
             self.vel.x *= -1
         if self.rect.y > HEIGHT - 50 or self.rect.y < 0:
             self.vel.y *= -1
-
+# Mob Update
     def update(self):
         self.inbounds()
-        # self.pos.x += self.vel.x
-        # self.pos.y += self.vel.y
         self.pos += self.vel
         self.rect.center = self.pos
+        target = self.game.player.pos - self.pos
+        self.acc = target.normalize() * MOB_ACC
+        self.vel += self.acc
+        self.vel *= (1 - self.cofric)
+        self.pos += self.vel + 0.5 * self.acc
+        self.rect.center = self.pos
 
-# create a new platform class...
-
+### PLATFORMS ###
 class Platform(Sprite):
     def __init__(self, x, y, width, height, color, variant):
         Sprite.__init__(self)
